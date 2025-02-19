@@ -1,19 +1,22 @@
 CC = gcc
 CFLAGS = -Wall -Werror -g -pedantic -Wno-unused-parameter
-TARGET = main
+TARGET = build/main
 
 SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst %.c,build/%.o,$(SRCS))
 
-all: $(TARGET)
+all: build $(TARGET)
+
+build:
+	mkdir -p build
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c
+build/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf build
 
-.PHONY: all clean
+.PHONY: all clean build
