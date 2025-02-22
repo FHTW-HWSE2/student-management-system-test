@@ -4,6 +4,7 @@ TARGET = build/main
 
 SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.c,build/%.o,$(SRCS))
+DEPS = $(wildcard *.h)
 
 all: build $(TARGET)
 
